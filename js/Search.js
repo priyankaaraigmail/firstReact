@@ -1,17 +1,23 @@
 import React from 'react'
-import preloadJson from '../public/data.json'
-import ShowCard from './ShowCard'
+
 
 const Search = React.createClass({
+  getInitialState () {
+      return{
+        searchTerm: ""
+      }
+  },
+  handleSearchTermChange(event) {
+    const value = event.target.value
+    this.props.sendFilterSearch(value)
+    this.setState({searchTerm: value})
+  },
   render () {
+
     return (
-      <div className='search'>
-        {preloadJson.shows.map((show) => {
-          	return (
-            <ShowCard key={show.imdbID} {...show} />
-          	)
-        })}
-      </div>
+      <header>
+      <input type='text' placeholder='Search' value={this.state.searchTerm} onChange={(e)=>this.handleSearchTermChange(e)} />
+      </header>
     )
   }
 })
